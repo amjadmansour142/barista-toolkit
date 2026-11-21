@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barista Toolkit</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;background:#101513;color:#f5f5ef;
+ font-family:Arial,sans-serif;padding:22px;
+}
+.container{max-width:480px;margin:auto}
+header{text-align:center;padding:25px 0}
+.logo{font-size:42px}
+h1{color:#b6d6b0;font-size:27px}
+.sub{color:#9da99e}
+.card{
+ background:#1b2420;border:1px solid #34453a;
+ border-radius:18px;padding:20px;margin:18px 0;
+}
+label{display:block;margin:16px 0 8px;color:#c5d3c7}
+input{
+ width:100%;padding:15px;border-radius:10px;
+ border:1px solid #526456;background:#101713;
+ color:white;font-size:21px;direction:ltr;
+}
+.result{
+ text-align:center;background:#263b2d;
+ border-radius:14px;padding:20px;margin-top:18px;
+}
+.ratio{font-size:43px;color:#c6e4b9;font-weight:bold}
+button{
+ width:100%;padding:16px;border:0;border-radius:12px;
+ background:#a8c99f;color:#152019;font-size:18px;
+ font-weight:bold;margin-top:15px;
+}
+.small{color:#9da99e;text-align:center;font-size:13px}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+<div class="logo">☕</div>
+<h1>BARISTA TOOLKIT</h1>
+<p class="sub">Your Personal Coffee Lab</p>
+</header>
+
+<div class="card">
+<h2>⚖️ Espresso Calculator</h2>
+<label>وزن البن الجاف (Dose) بالجرام</label>
+<input id="dose" type="number" value="18" min="0" step="0.1">
+
+<label>وزن القهوة المستخلصة (Yield) بالجرام</label>
+<input id="yield" type="number" value="36" min="0" step="0.1">
+
+<div class="result">
+<p>نسبة الاستخلاص (Brew Ratio)</p>
+<div class="ratio" id="ratio">1 : 2.0</div>
+<p id="details">18g Coffee → 36g Espresso</p>
+</div>
+
+<button onclick="resetValues()">إعادة ضبط</button>
+</div>
+
+<div class="card">
+<h3>📊 قراءة النتيجة</h3>
+<p id="reading">نسبة 1:2 — نسبة كلاسيكية للإسبريسو.</p>
+<p class="small">النسبة = وزن الناتج ÷ وزن البن</p>
+</div>
+<p class="small">BARISTA TOOLKIT · Made for Coffee Lovers</p>
+</div>
+
+<script>
+const dose=document.getElementById('dose');
+const yieldInput=document.getElementById('yield');
+
+function calculate(){
+ const d=parseFloat(dose.value);
+ const y=parseFloat(yieldInput.value);
+ if(!d || d<=0 || isNaN(y) || y<0){
+  document.getElementById('ratio').textContent='—';
+  document.getElementById('details').textContent='أدخل قيماً صحيحة';
+  return;
+ }
+ const r=y/d;
+ document.getElementById('ratio').textContent='1 : '+r.toFixed(2);
+ document.getElementById('details').textContent=
+ d+'g Coffee → '+y+'g Espresso';
+ let msg='نسبة مركزة نسبياً.';
+ if(r>=1.7 && r<=2.3) msg='نسبة كلاسيكية للإسبريسو.';
+ else if(r>2.3) msg='نسبة طويلة (Lungo).';
+ else if(r<1.7) msg='نسبة قصيرة (Ristretto).';
+ document.getElementById('reading').textContent=msg;
+}
+function resetValues(){
+ dose.value=18;
+ yieldInput.value=36;
+ calculate();
+}
+dose.addEventListener('input',calculate);
+yieldInput.addEventListener('input',calculate);
+calculate();
+</script>
+</body>
+</html>
