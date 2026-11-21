@@ -1,107 +1,179 @@
-
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<!doctype html>
+<html lang="en" dir="ltr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f7f8f5">
+<meta name="description" content="A bilingual toolkit for baristas: espresso, brew ratios, recipes and coffee notes.">
 <title>Barista Toolkit</title>
 <style>
-*{box-sizing:border-box}
-body{
- margin:0;background:#101513;color:#f5f5ef;
- font-family:Arial,sans-serif;padding:22px;
-}
-.container{max-width:480px;margin:auto}
-header{text-align:center;padding:25px 0}
-.logo{font-size:42px}
-h1{color:#b6d6b0;font-size:27px}
-.sub{color:#9da99e}
-.card{
- background:#1b2420;border:1px solid #34453a;
- border-radius:18px;padding:20px;margin:18px 0;
-}
-label{display:block;margin:16px 0 8px;color:#c5d3c7}
-input{
- width:100%;padding:15px;border-radius:10px;
- border:1px solid #526456;background:#101713;
- color:white;font-size:21px;direction:ltr;
-}
-.result{
- text-align:center;background:#263b2d;
- border-radius:14px;padding:20px;margin-top:18px;
-}
-.ratio{font-size:43px;color:#c6e4b9;font-weight:bold}
-button{
- width:100%;padding:16px;border:0;border-radius:12px;
- background:#a8c99f;color:#152019;font-size:18px;
- font-weight:bold;margin-top:15px;
-}
-.small{color:#9da99e;text-align:center;font-size:13px}
+:root{--bg:#f5f7f3;--surface:#fff;--surface2:#eef3ed;--text:#17251d;--muted:#68776d;--line:#dce5dc;--green:#23764c;--green2:#dff1e5;--accent:#b77938;--shadow:0 12px 32px #203a2810}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+.shell{max-width:1160px;margin:auto;padding:24px 20px 60px}
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:28px}
+.brand{display:flex;align-items:center;gap:12px}.logo{width:44px;height:44px;border-radius:14px;background:var(--green);color:white;display:grid;place-items:center;font-size:23px}
+.brand h1{font-size:20px;margin:0;letter-spacing:-.4px}.brand p{margin:1px 0 0;color:var(--muted);font-size:12px}
+.header-actions{display:flex;gap:8px}.btn{border:1px solid var(--line);background:var(--surface);color:var(--text);padding:9px 13px;border-radius:11px;font-weight:650}.btn.primary{background:var(--green);border-color:var(--green);color:white}.btn:hover{filter:brightness(.97)}
+.hero{background:linear-gradient(115deg,#e8f3e9,#f8f4e9);border:1px solid #dce9dc;border-radius:22px;padding:28px;margin-bottom:22px;display:flex;justify-content:space-between;gap:20px;align-items:center}.eyebrow{font-size:11px;font-weight:800;letter-spacing:1.3px;text-transform:uppercase;color:var(--green)}.hero h2{font-size:clamp(25px,4vw,38px);line-height:1.12;letter-spacing:-1px;margin:8px 0}.hero p{color:#526257;max-width:570px;margin:8px 0 0}.hero-mark{font-size:76px;opacity:.8;padding:0 16px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}.tab{padding:10px 15px;border:1px solid var(--line);background:var(--surface);border-radius:12px;color:var(--muted);font-weight:700}.tab.active{background:var(--green2);color:var(--green);border-color:#b8d8c2}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:var(--shadow);grid-column:span 6;min-width:0}.card.full{grid-column:1/-1}.card.third{grid-column:span 4}.card h3{font-size:17px;margin:0 0 5px}.sub{color:var(--muted);font-size:13px;margin:0 0 18px}
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field label{display:block;color:var(--muted);font-size:12px;font-weight:700;margin-bottom:6px}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:10px;background:#fbfcfa;padding:11px;color:var(--text);outline:none}.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--green);box-shadow:0 0 0 3px #23764c18}
+.result{margin-top:16px;background:var(--surface2);border-radius:13px;padding:14px;display:flex;align-items:center;justify-content:space-between;gap:12px}.result strong{font-size:23px;color:var(--green);font-variant-numeric:tabular-nums}.result small{display:block;color:var(--muted)}
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.pill{background:#f6f2e9;color:#79572e;border-radius:30px;padding:5px 10px;font-size:12px;font-weight:700}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.list{display:grid;gap:9px}.entry{border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;justify-content:space-between;gap:12px;align-items:center}.entry small{display:block;color:var(--muted)}.empty{color:var(--muted);padding:20px;text-align:center;border:1px dashed var(--line);border-radius:12px}
+.recipe-row{display:grid;grid-template-columns:1fr 110px 38px;gap:8px;margin:8px 0}.recipe-row input{min-width:0;border:1px solid var(--line);border-radius:9px;padding:9px}.recipe-row button{border:0;background:#fae9e7;color:#9b3b31;border-radius:9px}
+footer{color:var(--muted);font-size:12px;text-align:center;padding:28px 0 0}
+[hidden]{display:none!important}
+@media(max-width:760px){.card,.card.third{grid-column:1/-1}.hero{padding:22px}.hero-mark{font-size:54px;padding:0}.shell{padding:16px 13px 40px}header{margin-bottom:18px}.fields{gap:10px}}
+@media(max-width:420px){.fields{grid-template-columns:1fr}.hero-mark{display:none}.brand h1{font-size:18px}}
 </style>
 </head>
 <body>
-<div class="container">
+<div class="shell">
 <header>
-<div class="logo">☕</div>
-<h1>BARISTA TOOLKIT</h1>
-<p class="sub">Your Personal Coffee Lab</p>
+ <div class="brand"><div class="logo">☕</div><div><h1>Barista Toolkit</h1><p data-i18n="tagline">Your daily coffee workspace</p></div></div>
+ <div class="header-actions"><button class="btn" id="langBtn" type="button">العربية</button></div>
 </header>
+<section class="hero">
+ <div><div class="eyebrow" data-i18n="eyebrow">BREW BETTER · WORK SMARTER</div><h2 data-i18n="heroTitle">Precision for every cup.</h2><p data-i18n="heroText">A practical workspace for espresso recipes, manual brewing, beverage prep and coffee tasting notes.</p></div>
+ <div class="hero-mark" aria-hidden="true">◉</div>
+</section>
+<nav class="tabs" aria-label="Sections">
+ <button class="tab active" data-tab="espresso" data-i18n="tabEspresso">Espresso</button>
+ <button class="tab" data-tab="brew" data-i18n="tabBrew">Brew calculator</button>
+ <button class="tab" data-tab="recipes" data-i18n="tabRecipes">Recipes</button>
+ <button class="tab" data-tab="lab" data-i18n="tabLab">Coffee lab</button>
+</nav>
 
-<div class="card">
-<h2>⚖️ Espresso Calculator</h2>
-<label>وزن البن الجاف (Dose) بالجرام</label>
-<input id="dose" type="number" value="18" min="0" step="0.1">
+<main>
+<section id="espresso" class="panel">
+ <div class="grid">
+  <article class="card">
+   <h3 data-i18n="espressoTitle">Espresso calculator</h3><p class="sub" data-i18n="espressoSub">Calculate brew ratio and classify your shot.</p>
+   <div class="fields">
+    <div class="field"><label data-i18n="dose">Coffee dose (g)</label><input id="dose" type="number" min="0" step=".1" value="18"></div>
+    <div class="field"><label data-i18n="yield">Beverage yield (g)</label><input id="yield" type="number" min="0" step=".1" value="36"></div>
+    <div class="field"><label data-i18n="time">Extraction time (sec)</label><input id="shotTime" type="number" min="0" step="1" value="28"></div>
+    <div class="field"><label data-i18n="target">Target ratio</label><select id="targetRatio"><option value="1.5">1:1.5 · Ristretto</option><option value="2" selected>1:2 · Espresso</option><option value="3">1:3 · Lungo</option></select></div>
+   </div>
+   <div class="result"><div><small data-i18n="actualRatio">Actual brew ratio</small><strong id="espressoRatio">1:2.00</strong></div><div><small data-i18n="shotStyle">Shot style</small><b id="shotStyle">Espresso</b></div></div>
+   <div class="pills"><span class="pill" id="targetYield">Target yield: 36 g</span><span class="pill" id="difference">On target</span></div>
+  </article>
+  <article class="card">
+   <h3 data-i18n="quickGuide">Quick extraction guide</h3><p class="sub" data-i18n="guideSub">Starting points only — adjust to taste and coffee.</p>
+   <div class="list">
+    <div class="entry"><div><b>Ristretto</b><small>Shorter, concentrated</small></div><b>1:1 – 1:1.5</b></div>
+    <div class="entry"><div><b>Espresso</b><small>Balanced starting point</small></div><b>1:1.8 – 1:2.5</b></div>
+    <div class="entry"><div><b>Lungo</b><small>Longer beverage yield</small></div><b>1:2.5 – 1:3+</b></div>
+   </div>
+   <p class="sub" style="margin:14px 0 0" data-i18n="guideNote">Taste, flow and puck preparation matter more than a fixed time or ratio.</p>
+  </article>
+ </div>
+</section>
 
-<label>وزن القهوة المستخلصة (Yield) بالجرام</label>
-<input id="yield" type="number" value="36" min="0" step="0.1">
+<section id="brew" class="panel" hidden>
+ <div class="grid">
+  <article class="card">
+   <h3 data-i18n="brewTitle">Brew ratio calculator</h3><p class="sub" data-i18n="brewSub">Scale water and coffee for your brew method.</p>
+   <div class="fields">
+    <div class="field"><label data-i18n="method">Brew method</label><select id="method"><option value="15">V60 · 1:15</option><option value="16">V60 · 1:16</option><option value="15">French Press · 1:15</option><option value="10">Cold Brew · 1:10</option><option value="12">Cold Brew · 1:12</option><option value="custom" data-i18n="custom">Custom ratio</option></select></div>
+    <div class="field"><label data-i18n="coffeeAmount">Coffee (g)</label><input id="brewCoffee" type="number" min="0" step=".1" value="20"></div>
+    <div class="field"><label data-i18n="ratio">Water ratio (1:x)</label><input id="brewRatio" type="number" min=".1" step=".1" value="15"></div>
+    <div class="field"><label data-i18n="desiredWater">Desired water (g)</label><input id="brewWater" type="number" min="0" step="1" placeholder="—"></div>
+   </div>
+   <div class="result"><div><small data-i18n="waterNeeded">Water needed</small><strong id="waterResult">300 g</strong></div><div><small data-i18n="coffeeNeeded">Coffee needed</small><strong id="coffeeResult">20 g</strong></div></div>
+   <p class="sub" style="margin:12px 0 0" data-i18n="brewNote">Enter coffee to calculate water, or enter desired water to calculate coffee.</p>
+  </article>
+  <article class="card">
+   <h3 data-i18n="brewStarting">Suggested starting ratios</h3><p class="sub" data-i18n="brewStartingSub">Use these as a starting recipe, then adjust.</p>
+   <div class="list">
+    <div class="entry"><b>V60 / Pour-over</b><b>1:15–1:17</b></div>
+    <div class="entry"><b>French Press</b><b>1:12–1:16</b></div>
+    <div class="entry"><b>Cold Brew</b><b>1:8–1:12</b></div>
+   </div>
+  </article>
+ </div>
+</section>
 
-<div class="result">
-<p>نسبة الاستخلاص (Brew Ratio)</p>
-<div class="ratio" id="ratio">1 : 2.0</div>
-<p id="details">18g Coffee → 36g Espresso</p>
+<section id="recipes" class="panel" hidden>
+ <div class="grid">
+  <article class="card">
+   <h3 data-i18n="recipeTitle">Recipe scaler</h3><p class="sub" data-i18n="recipeSub">Build a drink recipe and scale every ingredient by servings.</p>
+   <div class="fields">
+    <div class="field"><label data-i18n="drinkName">Drink name</label><input id="drinkName" placeholder="e.g. Iced Spanish Latte"></div>
+    <div class="field"><label data-i18n="servings">Servings</label><input id="servings" type="number" min="1" step="1" value="1"></div>
+   </div>
+   <div style="margin-top:15px"><b data-i18n="ingredients">Ingredients</b><div id="ingredientRows">
+    <div class="recipe-row"><input aria-label="Ingredient" value="Espresso"><input aria-label="Amount in ml or g" type="number" min="0" step=".1" value="36"><button type="button" aria-label="Remove">×</button></div>
+    <div class="recipe-row"><input aria-label="Ingredient" value="Milk"><input aria-label="Amount in ml or g" type="number" min="0" step=".1" value="150"><button type="button" aria-label="Remove">×</button></div>
+    <div class="recipe-row"><input aria-label="Ingredient" value="Condensed milk"><input aria-label="Amount in ml or g" type="number" min="0" step=".1" value="20"><button type="button" aria-label="Remove">×</button></div>
+   </div></div>
+   <div class="actions"><button class="btn" id="addIngredient" type="button" data-i18n="addIngredient">+ Add ingredient</button><button class="btn primary" id="scaleRecipe" type="button" data-i18n="scale">Scale recipe</button></div>
+  </article>
+  <article class="card">
+   <h3 data-i18n="scaledRecipe">Scaled recipe</h3><p class="sub" data-i18n="scaledSub">Your ingredient quantities for the selected servings.</p>
+   <div id="scaledOutput" class="empty" data-i18n="scaleHint">Enter a recipe and select Scale recipe.</div>
+   <div class="actions"><button class="btn" id="saveRecipe" type="button" data-i18n="saveRecipe">Save recipe</button></div>
+  </article>
+  <article class="card full">
+   <h3 data-i18n="savedRecipes">Saved recipes</h3><div id="recipeList" class="list"><div class="empty" data-i18n="noRecipes">No saved recipes yet.</div></div>
+  </article>
+ </div>
+</section>
+
+<section id="lab" class="panel" hidden>
+ <div class="grid">
+  <article class="card">
+   <h3 data-i18n="beanTitle">Coffee bean log</h3><p class="sub" data-i18n="beanSub">Record origin, process, roast and tasting notes.</p>
+   <div class="fields">
+    <div class="field"><label data-i18n="beanName">Coffee / lot name</label><input id="beanName" placeholder="Colombia Huila"></div>
+    <div class="field"><label data-i18n="origin">Origin</label><input id="origin" placeholder="Colombia"></div>
+    <div class="field"><label data-i18n="process">Process</label><select id="process"><option>Washed</option><option>Natural</option><option>Honey</option><option>Anaerobic</option><option>Other</option></select></div>
+    <div class="field"><label data-i18n="roast">Roast level</label><select id="roast"><option>Light</option><option>Medium-light</option><option selected>Medium</option><option>Medium-dark</option><option>Dark</option></select></div>
+    <div class="field" style="grid-column:1/-1"><label data-i18n="notes">Tasting notes</label><textarea id="notes" rows="3" placeholder="Chocolate, citrus, caramel..."></textarea></div>
+   </div>
+   <div class="actions"><button class="btn primary" id="saveBean" type="button" data-i18n="saveBean">Save coffee</button></div>
+  </article>
+  <article class="card">
+   <h3 data-i18n="beanLog">Your coffee log</h3><p class="sub" data-i18n="beanLogSub">Saved on this device in your browser.</p>
+   <div id="beanList" class="list"><div class="empty" data-i18n="noBeans">No coffees saved yet.</div></div>
+  </article>
+ </div>
+</section>
+</main>
+<footer data-i18n="footer">Barista Toolkit · Built for curious coffee people.</footer>
 </div>
-
-<button onclick="resetValues()">إعادة ضبط</button>
-</div>
-
-<div class="card">
-<h3>📊 قراءة النتيجة</h3>
-<p id="reading">نسبة 1:2 — نسبة كلاسيكية للإسبريسو.</p>
-<p class="small">النسبة = وزن الناتج ÷ وزن البن</p>
-</div>
-<p class="small">BARISTA TOOLKIT · Made for Coffee Lovers</p>
-</div>
-
 <script>
-const dose=document.getElementById('dose');
-const yieldInput=document.getElementById('yield');
-
-function calculate(){
- const d=parseFloat(dose.value);
- const y=parseFloat(yieldInput.value);
- if(!d || d<=0 || isNaN(y) || y<0){
-  document.getElementById('ratio').textContent='—';
-  document.getElementById('details').textContent='أدخل قيماً صحيحة';
-  return;
- }
- const r=y/d;
- document.getElementById('ratio').textContent='1 : '+r.toFixed(2);
- document.getElementById('details').textContent=
- d+'g Coffee → '+y+'g Espresso';
- let msg='نسبة مركزة نسبياً.';
- if(r>=1.7 && r<=2.3) msg='نسبة كلاسيكية للإسبريسو.';
- else if(r>2.3) msg='نسبة طويلة (Lungo).';
- else if(r<1.7) msg='نسبة قصيرة (Ristretto).';
- document.getElementById('reading').textContent=msg;
-}
-function resetValues(){
- dose.value=18;
- yieldInput.value=36;
- calculate();
-}
-dose.addEventListener('input',calculate);
-yieldInput.addEventListener('input',calculate);
-calculate();
+const $=id=>document.getElementById(id);
+const dict={
+en:{tagline:"Your daily coffee workspace",eyebrow:"BREW BETTER · WORK SMARTER",heroTitle:"Precision for every cup.",heroText:"A practical workspace for espresso recipes, manual brewing, beverage prep and coffee tasting notes.",tabEspresso:"Espresso",tabBrew:"Brew calculator",tabRecipes:"Recipes",tabLab:"Coffee lab",espressoTitle:"Espresso calculator",espressoSub:"Calculate brew ratio and classify your shot.",dose:"Coffee dose (g)",yield:"Beverage yield (g)",time:"Extraction time (sec)",target:"Target ratio",actualRatio:"Actual brew ratio",shotStyle:"Shot style",quickGuide:"Quick extraction guide",guideSub:"Starting points only — adjust to taste and coffee.",targetYield:"Target yield",onTarget:"On target",aboveTarget:"Above target",belowTarget:"Below target",guideNote:"Taste, flow and puck preparation matter more than a fixed time or ratio.",brewTitle:"Brew ratio calculator",brewSub:"Scale water and coffee for your brew method.",method:"Brew method",custom:"Custom ratio",coffeeAmount:"Coffee (g)",ratio:"Water ratio (1:x)",desiredWater:"Desired water (g)",waterNeeded:"Water needed",coffeeNeeded:"Coffee needed",brewNote:"Enter coffee to calculate water, or enter desired water to calculate coffee.",brewStarting:"Suggested starting ratios",brewStartingSub:"Use these as a starting recipe, then adjust.",recipeTitle:"Recipe scaler",recipeSub:"Build a drink recipe and scale every ingredient by servings.",drinkName:"Drink name",servings:"Servings",ingredients:"Ingredients",addIngredient:"+ Add ingredient",scale:"Scale recipe",scaledRecipe:"Scaled recipe",scaledSub:"Your ingredient quantities for the selected servings.",scaleHint:"Enter a recipe and select Scale recipe.",saveRecipe:"Save recipe",savedRecipes:"Saved recipes",noRecipes:"No saved recipes yet.",beanTitle:"Coffee bean log",beanSub:"Record origin, process, roast and tasting notes.",beanName:"Coffee / lot name",origin:"Origin",process:"Process",roast:"Roast level",notes:"Tasting notes",saveBean:"Save coffee",beanLog:"Your coffee log",beanLogSub:"Saved on this device in your browser.",noBeans:"No coffees saved yet.",footer:"Barista Toolkit · Built for curious coffee people.",saved:"Saved",delete:"Delete",amount:"Amount",invalid:"Please enter valid positive numbers."},
+ar:{tagline:"مساحتك اليومية لعالم القهوة",eyebrow:"حضّر أفضل · اعمل بذكاء",heroTitle:"دقّة في كل كوب.",heroText:"مساحة عملية لوصفات الإسبريسو، وطرق التحضير اليدوية، وتجهيز المشروبات، وتدوين ملاحظات تذوق القهوة.",tabEspresso:"إسبريسو",tabBrew:"حاسبة التحضير",tabRecipes:"الوصفات",tabLab:"مختبر القهوة",espressoTitle:"حاسبة الإسبريسو",espressoSub:"احسب نسبة الاستخلاص وصنّف جرعة الإسبريسو.",dose:"جرعة البن (غ)",yield:"وزن المشروب (غ)",time:"زمن الاستخلاص (ثانية)",target:"النسبة المستهدفة",actualRatio:"نسبة الاستخلاص الفعلية",shotStyle:"نوع الجرعة",quickGuide:"دليل سريع للاستخلاص",guideSub:"قيم بداية قابلة للتعديل حسب الذوق والبن.",targetYield:"الناتج المستهدف",onTarget:"ضمن الهدف",aboveTarget:"أعلى من الهدف",belowTarget:"أقل من الهدف",guideNote:"الطعم والتدفق وتحضير القرص أهم من الالتزام بزمن أو نسبة ثابتة.",brewTitle:"حاسبة نسب التحضير",brewSub:"احسب كمية الماء والبن حسب طريقة التحضير.",method:"طريقة التحضير",custom:"نسبة مخصصة",coffeeAmount:"كمية البن (غ)",ratio:"نسبة الماء (1:x)",desiredWater:"كمية الماء المطلوبة (غ)",waterNeeded:"كمية الماء",coffeeNeeded:"كمية البن",brewNote:"أدخل كمية البن لحساب الماء، أو كمية الماء لحساب البن.",brewStarting:"نسب مقترحة كبداية",brewStartingSub:"استخدمها كوصفة أولية ثم عدّل حسب النتيجة.",recipeTitle:"مضاعف الوصفات",recipeSub:"أنشئ وصفة مشروب واضرب كميات المكونات حسب عدد الحصص.",drinkName:"اسم المشروب",servings:"عدد الحصص",ingredients:"المكونات",addIngredient:"+ إضافة مكوّن",scale:"احسب الكميات",scaledRecipe:"الوصفة بعد المضاعفة",scaledSub:"كميات المكونات وفق عدد الحصص المحدد.",scaleHint:"أدخل الوصفة ثم اضغط احسب الكميات.",saveRecipe:"حفظ الوصفة",savedRecipes:"الوصفات المحفوظة",noRecipes:"لا توجد وصفات محفوظة بعد.",beanTitle:"سجل حبوب القهوة",beanSub:"سجّل المنشأ والمعالجة والتحميص وملاحظات التذوق.",beanName:"اسم البن / الدفعة",origin:"المنشأ",process:"المعالجة",roast:"درجة التحميص",notes:"ملاحظات التذوق",saveBean:"حفظ البن",beanLog:"سجل القهوة",beanLogSub:"تُحفظ البيانات على هذا الجهاز داخل المتصفح.",noBeans:"لا توجد أنواع قهوة محفوظة بعد.",footer:"Barista Toolkit · صُمّم لمحبي القهوة الفضوليين.",saved:"تم الحفظ",delete:"حذف",amount:"الكمية",invalid:"يرجى إدخال أرقام موجبة وصحيحة."}
+};
+let lang="en",lastScaled=null;
+function t(k){return dict[lang][k]||k}
+function setLang(){document.documentElement.lang=lang;document.documentElement.dir=lang==="ar"?"rtl":"ltr";$("langBtn").textContent=lang==="ar"?"English":"العربية";document.querySelectorAll("[data-i18n]").forEach(el=>{const k=el.dataset.i18n;if(dict[lang][k])el.textContent=dict[lang][k]});updateEspresso();updateBrew();renderRecipes();renderBeans()}
+$("langBtn").addEventListener("click",()=>{lang=lang==="en"?"ar":"en";setLang()});
+document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x===b));document.querySelectorAll(".panel").forEach(p=>p.hidden=p.id!==b.dataset.tab)}));
+function num(id){return Number($(id).value)}
+function updateEspresso(){let d=num("dose"),y=num("yield"),r=d>0?y/d:0,target=num("targetRatio"),time=num("shotTime");$("espressoRatio").textContent=r?`1:${r.toFixed(2)}`:"—";let style=r<1.7?"Ristretto":r<=2.5?"Espresso":"Lungo";$("shotStyle").textContent=style;$("targetYield").textContent=`${t("targetYield")}: ${(d*target).toFixed(1)} g`;let diff=y-d*target;let label=Math.abs(diff)<.2?t("onTarget"):diff>0?t("aboveTarget"):t("belowTarget");$("difference").textContent=`${label}${time>0?" · "+time+"s":""}`}
+["dose","yield","shotTime","targetRatio"].forEach(id=>$(id).addEventListener("input",updateEspresso));updateEspresso();
+function updateBrew(){let c=num("brewCoffee"),r=num("brewRatio"),w=num("brewWater");if(c>0&&r>0){$("waterResult").textContent=(c*r).toFixed(1)+" g";$("coffeeResult").textContent=(w>0?w/r:c).toFixed(1)+" g"}else{$("waterResult").textContent="—";$("coffeeResult").textContent="—"}}
+$("method").addEventListener("change",()=>{if($("method").value!=="custom")$("brewRatio").value=$("method").value;updateBrew()});["brewCoffee","brewRatio","brewWater"].forEach(id=>$(id).addEventListener("input",updateBrew));updateBrew();
+$("brewWater").addEventListener("input",()=>{let w=num("brewWater"),r=num("brewRatio");if(w>0&&r>0)$("coffeeResult").textContent=(w/r).toFixed(1)+" g"});
+$("addIngredient").addEventListener("click",()=>{let row=document.createElement("div");row.className="recipe-row";row.innerHTML='<input aria-label="Ingredient" placeholder="Ingredient"><input aria-label="Amount" type="number" min="0" step=".1" placeholder="g / ml"><button type="button" aria-label="Remove">×</button>';row.querySelector("button").onclick=()=>row.remove();$("ingredientRows").append(row)});
+$("ingredientRows").addEventListener("click",e=>{if(e.target.tagName==="BUTTON")e.target.closest(".recipe-row").remove()});
+function getRecipe(){let items=[...$("ingredientRows").querySelectorAll(".recipe-row")].map(r=>({name:r.children[0].value.trim(),amount:Number(r.children[1].value)})).filter(x=>x.name&&x.amount>0);return {name:$("drinkName").value.trim()||"Untitled recipe",servings:Math.max(1,Math.floor(num("servings")||1)),items}}
+function scale(){let r=getRecipe();if(!r.items.length){$("scaledOutput").textContent=t("invalid");return}lastScaled=r;$("scaledOutput").className="list";$("scaledOutput").innerHTML=r.items.map(x=>`<div class="entry"><b>${esc(x.name)}</b><strong>${(x.amount*r.servings).toFixed(1)} g / ml</strong></div>`).join("")}
+$("scaleRecipe").addEventListener("click",scale);
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function getStore(k){try{return JSON.parse(localStorage.getItem(k)||"[]")}catch{return []}}
+function setStore(k,v){localStorage.setItem(k,JSON.stringify(v))}
+$("saveRecipe").addEventListener("click",()=>{let r=lastScaled||getRecipe();if(!r.items.length){$("scaledOutput").textContent=t("invalid");return}let a=getStore("bt-recipes");a.unshift(r);setStore("bt-recipes",a);renderRecipes()});
+function renderRecipes(){let a=getStore("bt-recipes");$("recipeList").innerHTML=a.length?a.map((r,i)=>`<div class="entry"><div><b>${esc(r.name)}</b><small>${r.servings} × · ${r.items.length} ingredients</small></div><button class="btn" data-del-recipe="${i}">${t("delete")}</button></div>`).join(""):`<div class="empty">${t("noRecipes")}</div>`}
+$("recipeList").addEventListener("click",e=>{let b=e.target.closest("[data-del-recipe]");if(b){let a=getStore("bt-recipes");a.splice(+b.dataset.delRecipe,1);setStore("bt-recipes",a);renderRecipes()}});
+$("saveBean").addEventListener("click",()=>{let name=$("beanName").value.trim();if(!name){$("beanName").focus();return}let a=getStore("bt-beans");a.unshift({name,origin:$("origin").value,process:$("process").value,roast:$("roast").value,notes:$("notes").value,date:new Date().toLocaleDateString()});setStore("bt-beans",a);["beanName","origin","notes"].forEach(id=>$(id).value="");renderBeans()});
+function renderBeans(){let a=getStore("bt-beans");$("beanList").innerHTML=a.length?a.map((b,i)=>`<div class="entry"><div><b>${esc(b.name)}</b><small>${esc(b.origin)} · ${esc(b.process)} · ${esc(b.roast)}<br>${esc(b.notes||"—")} · ${esc(b.date)}</small></div><button class="btn" data-del-bean="${i}">${t("delete")}</button></div>`).join(""):`<div class="empty">${t("noBeans")}</div>`}
+$("beanList").addEventListener("click",e=>{let b=e.target.closest("[data-del-bean]");if(b){let a=getStore("bt-beans");a.splice(+b.dataset.delBean,1);setStore("bt-beans",a);renderBeans()}});
+renderRecipes();renderBeans();
 </script>
-</body>
-</html>
+</body></html>
